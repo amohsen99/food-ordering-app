@@ -124,7 +124,7 @@
     @apply mx-auto  px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-48;
 }
     .section-gap{
-      @apply py-1g0 px-10; 
+      @apply py-10 px-10; 
     }
   
 }
