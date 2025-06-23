@@ -1,0 +1,20 @@
+import MainHeading from '@/components/main-heading';
+
+async function BestSellers() {
+
+  return (
+    <section>
+      <div className='container'>
+        <div className='text-center mb-4'>
+          <MainHeading
+            subTitle="Check out "
+            title="Our Best Sellers"
+          />
+        </div>
+        {/* <Menu items={bestSellers} /> */}
+      </div>
+    </section>
+  );
+}
+
+export default BestSellers;
