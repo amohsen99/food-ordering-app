@@ -12,6 +12,7 @@
 
 # testing
 /coverage
+/food-ordering-app
 
 # next.js
 /.next/
