@@ -1,6 +1,8 @@
+import { Product } from '@prisma/client';
 import MenuItem from './MenuItem';
+import { ProductWithRelations } from '@/types/product';
 
-async function Menu({ items }: { items: any }) {
+async function    Menu({ items }: { items: ProductWithRelations[] }) {
   return items.length > 0 ? (
     <ul className='grid grid-cols-1 sm:grid-cols-3 gap-4'>
       {items.map((item: any) => (
@@ -13,3 +15,4 @@ async function Menu({ items }: { items: any }) {
 }
 
 export default Menu;
+ 

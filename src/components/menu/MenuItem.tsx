@@ -1,8 +1,10 @@
 import { formatCurrency } from "@/lib/formatters";
 import Image from "next/image";
 import AddToCartButton from "./add-to-cart-button";
+import { Product } from "@prisma/client";
+import { ProductWithRelations } from "@/types/product";
 
-function MenuItem({ item }: { item: any }) {
+function MenuItem({ item }: { item: ProductWithRelations }) {
   return (
     <li
       className="p-6 rounded-lg text-center

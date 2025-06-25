@@ -6,9 +6,7 @@ import BestSellers from "./_comonents/BestSellers";
 import { db } from "@/lib/prisma";
 
 export default async function  Home() {
-  const product=await db.product.findMany()
-  
-  console.log(product);
+
   console.log("home page");
   return (
    <main>

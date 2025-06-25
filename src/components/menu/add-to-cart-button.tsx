@@ -15,21 +15,12 @@ import { Checkbox } from '@/components/ui/checkbox';
 import Image from 'next/image';
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
+import { Extra, Product, Size } from '@prisma/client';
+import { ProductWithRelations } from '@/types/product';
 
 
 
-function AddToCartButton({ item }: { item: any }) {
-
-    const sizes = [
-      { id: 'small', name: 'Small', price: 2 },
-      { id: 'medium', name: 'Medium', price: 4 },
-      { id: 'large', name: 'Large', price:6 },
-    ];
-    const extras = [
-      { id: 'extra-cheese', name: 'Extra Cheese', price: 1.5 },
-      { id: 'extra-sauce', name: 'Extra Sauce', price: 1.0 },
-      { id: 'extra-toppings', name: 'Extra Toppings', price: 2.0 },
-    ];
+function AddToCartButton({ item }: { item: ProductWithRelations }) {
   return (
     <Dialog>
       <DialogTrigger asChild><Button>AddToCart</Button></DialogTrigger>
@@ -44,13 +35,13 @@ function AddToCartButton({ item }: { item: any }) {
         <div className='space-y-10'>
           <div className='space-y-4 text-center'>
             <Label htmlFor='pick-size'>Pick your size</Label>
-            <PickSize item={item} sizes={sizes} />
+            <PickSize item={item} sizes={item.sizes } />
           </div>
         </div>
          <div className='space-y-10'>
           <div className='space-y-4 text-center'>
             <Label htmlFor='pick-size'>Add Extras</Label>
-            <Extras extras={extras} />
+            <Extras extras={item.extras} />
           </div>
         </div>
         <DialogFooter>
@@ -67,11 +58,11 @@ export default AddToCartButton
 function PickSize({
   sizes, item
 }: {
-  sizes: any; item: any
+  sizes: Size[]; item: Product
 }) {
   return (
     <RadioGroup defaultValue='comfortable'>
-      {sizes.map((size: any) => (
+      {sizes.map((size) => (
         <div key={size.id} className='flex items-center space-x-2 border border-gray-100 rounded-md p-4'>
           <RadioGroupItem className='bg-orange-500' color='orange'
             value='default'
@@ -90,7 +81,7 @@ function Extras({
   // selectedExtras,
   // setSelectedExtras,
 }: {
-  extras: any;
+  extras: Extra[];
   // selectedExtras: Extra[];
   // setSelectedExtras: React.Dispatch<React.SetStateAction<Extra[]>>;
 }) {

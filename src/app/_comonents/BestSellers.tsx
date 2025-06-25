@@ -1,10 +1,12 @@
 import MainHeading from '@/components/main-heading';
 import Menu from '@/components/menu';
 import { db } from '@/lib/prisma';
+import { getBestSellers } from '@/server/db/products';
+import { get } from 'http';
 
 async function BestSellers() {
   
-  const bestSellers=await db.product.findMany();
+  const bestSellers=await getBestSellers();
 
   return (
     <section>
