@@ -6,14 +6,14 @@ import { get } from 'http';
 
 async function BestSellers() {
   
-  const bestSellers=await getBestSellers();
+  const bestSellers=await getBestSellers(3);
 
   return (
     <section>
       <div className='container'>
         <div className='text-center mb-4'>
           <MainHeading
-            subTitle="Check out "
+            subTitle="Check out "ل
             title="Our Best Sellers"
           />
         </div>  
