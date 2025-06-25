@@ -69,7 +69,20 @@ model User {
 ---
 
 ### 4. **Run the migration and generate Prisma client**
+## this should run after every change in the table or prisma schema
 
+
+---
+
+```bash
+npx prisma generate
+```
+
+This:
+
+* Generates the Prisma client for TypeScript use  
+
+---
 ```bash
 npx prisma migrate dev --name init
 ```
@@ -79,7 +92,6 @@ This:
 * Runs migration to create the database tables
 * Generates the Prisma client for TypeScript use
 
----
 
 ### 5. **Use Prisma Client in your app**
 

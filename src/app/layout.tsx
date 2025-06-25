@@ -3,12 +3,11 @@ import { Roboto } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header";
 
-const roboto = Roboto({
-  // variable: "--font-geist-sans",
-  subsets: ["latin"],
-  weight:['400',"500","700"],
-  preload:true 
-});
+const roboto = {
+  style: {
+    fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+  },
+};
 
 
 
@@ -25,7 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={roboto.className}
+        
       >
                 <Header/>
 
