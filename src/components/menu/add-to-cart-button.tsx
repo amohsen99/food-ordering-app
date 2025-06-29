@@ -29,6 +29,7 @@ function AddToCartButton({ item }: { item: ProductWithRelations }) {
     cart.find((element: { id: string; }) => element.id === item.id)?.size ||
     item.sizes.find((size) => size.name === ProductSizes.SMALL);
   const [selectedSize, setSelectedSize] = useState<Size>(defaultSize!);
+  const [selectedExtras, setSelectedExtras] = useState<Extra[]>([]);
 
 
   return (
@@ -51,7 +52,11 @@ function AddToCartButton({ item }: { item: ProductWithRelations }) {
         <div className='space-y-10'>
           <div className='space-y-4 text-center'>
             <Label htmlFor='pick-size'>Add Extras</Label>
-            <Extras extras={item.extras} />
+            <Extras 
+              extras={item.extras} 
+              selectedExtras={selectedExtras}
+              setSelectedExtras={setSelectedExtras}
+            />
           </div>
         </div>
         <DialogFooter>
@@ -104,32 +109,32 @@ function PickSize({
 
 function Extras({
   extras,
-  // selectedExtras,
-  // setSelectedExtras,
+  selectedExtras,
+  setSelectedExtras,
 }: {
   extras: Extra[];
-  // selectedExtras: Extra[];
-  // setSelectedExtras: React.Dispatch<React.SetStateAction<Extra[]>>;
+  selectedExtras: Extra[];
+  setSelectedExtras: React.Dispatch<React.SetStateAction<Extra[]>>;
 }) {
-  // const handleExtra = (extra: Extra) => {
-  //   if (selectedExtras.find((e) => e.id === extra.id)) {
-  //     const filteredSelectedExtras = selectedExtras.filter(
-  //       (item) => item.id !== extra.id
-  //     );
-  //     setSelectedExtras(filteredSelectedExtras);
-  //   } else {
-  //     setSelectedExtras((prev) => [...prev, extra]);
-  //   }
-  // };
-  return extras.map((extra: any) => (
+  const handleExtra = (extra: Extra) => {
+    if (selectedExtras.find((e) => e.id === extra.id)) {
+      const filteredSelectedExtras = selectedExtras.filter(
+        (item) => item.id !== extra.id
+      );
+      setSelectedExtras(filteredSelectedExtras);
+    } else {
+      setSelectedExtras((prev) => [...prev, extra]);
+    }
+  };
+  return extras.map((extra: Extra) => (
     <div
       key={extra.id}
       className='flex items-center space-x-2 border border-gray-100 rounded-md p-4'
     >
       <Checkbox
         id={extra.id}
-      // onClick={() => handleExtra(extra)}
-      // checked={Boolean(selectedExtras.find((e) => e.id === extra.id))}
+        onClick={() => handleExtra(extra)}
+        checked={Boolean(selectedExtras.find((e) => e.id === extra.id))}
       />
       <Label
         htmlFor={extra.id}
