@@ -15,12 +15,22 @@ import { Checkbox } from '@/components/ui/checkbox';
 import Image from 'next/image';
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
-import { Extra, Product, Size } from '@prisma/client';
+import { Extra, Product, ProductSizes, Size } from '@prisma/client';
 import { ProductWithRelations } from '@/types/product';
+import { useAppSelector } from '@/redux/hooks';
+import { useState } from 'react';
+import { selectCartItems } from '@/redux/features/cart/cartSlice';
 
 
 
 function AddToCartButton({ item }: { item: ProductWithRelations }) {
+  const cart = useAppSelector(selectCartItems);
+  const defaultSize =
+    cart.find((element: { id: string; }) => element.id === item.id)?.size ||
+    item.sizes.find((size) => size.name === ProductSizes.SMALL);
+  const [selectedSize, setSelectedSize] = useState<Size>(defaultSize!);
+
+
   return (
     <Dialog>
       <DialogTrigger asChild><Button>AddToCart</Button></DialogTrigger>
@@ -35,10 +45,10 @@ function AddToCartButton({ item }: { item: ProductWithRelations }) {
         <div className='space-y-10'>
           <div className='space-y-4 text-center'>
             <Label htmlFor='pick-size'>Pick your size</Label>
-            <PickSize item={item} sizes={item.sizes } />
+            <PickSize item={item} sizes={item.sizes} selectedSize={selectedSize} setSelectedSize={setSelectedSize} />
           </div>
         </div>
-         <div className='space-y-10'>
+        <div className='space-y-10'>
           <div className='space-y-4 text-center'>
             <Label htmlFor='pick-size'>Add Extras</Label>
             <Extras extras={item.extras} />
@@ -56,19 +66,34 @@ function AddToCartButton({ item }: { item: ProductWithRelations }) {
 
 export default AddToCartButton
 function PickSize({
-  sizes, item
+  sizes,
+  item,
+  selectedSize,
+  setSelectedSize,
 }: {
-  sizes: Size[]; item: Product
+  sizes: Size[];
+  selectedSize: Size;
+  item: Product;
+  setSelectedSize: React.Dispatch<React.SetStateAction<Size>>;
 }) {
   return (
-    <RadioGroup defaultValue='comfortable'>
+    <RadioGroup
+      value={selectedSize.id.toString()}
+      onValueChange={(value) => {
+        const size = sizes.find((s) => s.id.toString() === value);
+        if (size) setSelectedSize(size);
+      }}
+    >
       {sizes.map((size) => (
-        <div key={size.id} className='flex items-center space-x-2 border border-gray-100 rounded-md p-4'>
-          <RadioGroupItem className='bg-orange-500' color='orange'
-            value='default'
-            id={size.id}
+        <div
+          key={size.id}
+          className='flex items-center space-x-2 border border-gray-100 rounded-md p-4'
+        >
+          <RadioGroupItem
+            value={size.id.toString()}
+            id={size.id.toString()}
           />
-          <Label htmlFor={size.id}>
+          <Label htmlFor={size.id.toString()}>
             {size.name} {formatCurrency(size.price + item.basePrice)}
           </Label>
         </div>
@@ -76,6 +101,7 @@ function PickSize({
     </RadioGroup>
   );
 }
+
 function Extras({
   extras,
   // selectedExtras,
@@ -95,15 +121,15 @@ function Extras({
   //     setSelectedExtras((prev) => [...prev, extra]);
   //   }
   // };
-  return extras.map((extra:any) => (
+  return extras.map((extra: any) => (
     <div
       key={extra.id}
       className='flex items-center space-x-2 border border-gray-100 rounded-md p-4'
     >
       <Checkbox
         id={extra.id}
-        // onClick={() => handleExtra(extra)}
-        // checked={Boolean(selectedExtras.find((e) => e.id === extra.id))}
+      // onClick={() => handleExtra(extra)}
+      // checked={Boolean(selectedExtras.find((e) => e.id === extra.id))}
       />
       <Label
         htmlFor={extra.id}
