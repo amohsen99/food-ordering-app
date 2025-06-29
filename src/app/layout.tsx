@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header";
+import Footer from "@/components/footer";
 
 const roboto = {
   style: {
@@ -29,6 +30,8 @@ export default function RootLayout({
                 <Header/>
 
         {children}
+            <Footer/>
+
       </body>
     </html>
   );

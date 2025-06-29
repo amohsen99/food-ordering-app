@@ -13,7 +13,7 @@ async function BestSellers() {
       <div className='container'>
         <div className='text-center mb-4'>
           <MainHeading
-            subTitle="Check out "ل
+            subTitle="Check out "
             title="Our Best Sellers"
           />
         </div>  

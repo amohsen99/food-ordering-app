@@ -130,7 +130,6 @@ model Order {
 model OrderProduct {
   id       String @id @default(cuid())
   quantity Int
-
   order     Order   @relation(fields: [orderId], references: [id])
   orderId   String
   user      User?   @relation(fields: [userId], references: [id])
