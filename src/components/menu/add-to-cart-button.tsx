@@ -17,20 +17,40 @@ import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
 import { Extra, Product, ProductSizes, Size } from '@prisma/client';
 import { ProductWithRelations } from '@/types/product';
-import { useAppSelector } from '@/redux/hooks';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { useState } from 'react';
-import { selectCartItems } from '@/redux/features/cart/cartSlice';
+import { addToCart, selectCartItems } from '@/redux/features/cart/cartSlice';
 
 
 
 function AddToCartButton({ item }: { item: ProductWithRelations }) {
   const cart = useAppSelector(selectCartItems);
+  const dispatch = useAppDispatch();
   const defaultSize =
     cart.find((element: { id: string; }) => element.id === item.id)?.size ||
     item.sizes.find((size) => size.name === ProductSizes.SMALL);
   const [selectedSize, setSelectedSize] = useState<Size>(defaultSize!);
   const [selectedExtras, setSelectedExtras] = useState<Extra[]>([]);
 
+  // Calculate total price
+  const calculateTotalPrice = () => {
+    const sizePrice = selectedSize ? selectedSize.price : 0;
+    const extrasPrice = selectedExtras.reduce((total, extra) => total + extra.price, 0);
+    return item.basePrice + sizePrice + extrasPrice;
+  };
+
+  const totalPrice = calculateTotalPrice();
+
+  const handleAddToCart = () => {
+    dispatch(addToCart({
+      id: item.id,
+      name: item.name,
+      image: item.image,
+      basePrice: item.basePrice,
+      size: selectedSize,
+      extras: selectedExtras, 
+    }));
+  };
 
   return (
     <Dialog>
@@ -60,8 +80,9 @@ function AddToCartButton({ item }: { item: ProductWithRelations }) {
           </div>
         </div>
         <DialogFooter>
-          <Button className='w-full bg-orange-500 hover:bg-orange-600 text-white'>
-            Add to Cart {formatCurrency(item.basePrice)}
+          <Button type='submit' onClick={handleAddToCart} className='w-full bg-orange-500 hover:bg-orange-600 text-white'>
+
+            Add to Cart {formatCurrency(totalPrice)}
           </Button>
         </DialogFooter>
       </DialogContent>
