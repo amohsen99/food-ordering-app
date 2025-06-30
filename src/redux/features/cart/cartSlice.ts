@@ -15,7 +15,6 @@ export type CartItem = {
 type CartState = {
   items: CartItem[];
 };
-// const initialCartItems = localStorage.getItem('cartItems');
 
 const initialState: CartState = {
   items: [],
@@ -25,36 +24,42 @@ export const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    addToCart: (state, action: PayloadAction<CartItem>) => {
-      const existingItem = state.items.find(item => item.id === action.payload.id);
+    addCartItem: (state, action: PayloadAction<CartItem>) => {
+      const existingItem = state.items.find(
+        (item) => item.id === action.payload.id
+      );
       if (existingItem) {
-        existingItem.quantity=(existingItem.quantity || 0) + 1;
-        existingItem.size=action.payload.size;
-        existingItem.extras=action.payload.extras;
+        existingItem.quantity = (existingItem.quantity || 0) + 1;
+        existingItem.size = action.payload.size;
+        existingItem.extras = action.payload.extras;
       } else {
-        state.items.push({...action.payload, quantity: 1});
+        state.items.push({ ...action.payload, quantity: 1 });
       }
     },
-    removeFromCart: (state, action: PayloadAction<string>) => {
-      const existingItem = state.items.find(item => item.id === action.payload);
-      if (existingItem) {
-        if (existingItem.quantity === 1) {
-          state.items = state.items.filter(item => item.id !== action.payload);
+    removeCartItem: (state, action: PayloadAction<{ id: string }>) => {
+      const item = state.items.find((item) => item.id === action.payload.id);
+      if (item) {
+        if (item.quantity === 1) {
+          state.items = state.items.filter(
+            (item) => item.id !== action.payload.id
+          );
         } else {
-          existingItem.quantity!-=1;
+          item.quantity! -= 1;
         }
       }
     },
-    removeItemFromCart: (state, action: PayloadAction<string>) => {
-      state.items = state.items.filter(item => item.id !== action.payload);
+    removeItemFromCart: (state, action: PayloadAction<{ id: string }>) => {
+      state.items = state.items = state.items.filter(
+        (item) => item.id !== action.payload.id
+      );
     },
     clearCart: (state) => {
       state.items = [];
     },
-  },  
+  },
 });
 
-export const { addToCart, removeFromCart, removeItemFromCart, clearCart   } =
+export const { addCartItem, removeCartItem, removeItemFromCart } =
   cartSlice.actions;
 
 export default cartSlice.reducer;
