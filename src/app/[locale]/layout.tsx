@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Roboto } from "next/font/google";
+// import { Cairo, Roboto } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
@@ -7,11 +7,18 @@ import ReduxProvider from "@/providers/ReduxProvider";
 import { Directions, Languages } from "@/constants/enums";
 import { Locale } from "@/i18n.config";
 
-const roboto = {
-  style: {
-    fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
-  },
-};
+// const roboto = Roboto({
+//   subsets: ["latin"],
+//   weight: ["400", "500", "700"],
+//   preload: true,
+// });
+
+// const cairo = Cairo({
+//   subsets: ["latin"],
+//   weight: ["400", "500", "700"],
+//   preload: true,
+// });
+
 export async function generateStaticParams() {
   return [{ locale: Languages.ARABIC }, { locale: Languages.ENGLISH }];
 }
@@ -37,9 +44,9 @@ export default async function RootLayout({
       dir={locale === Languages.ARABIC ? Directions.RTL : Directions.LTR}
     >
       <body
-        className={
-          locale === Languages.ARABIC ? 'font-cairo' : 'font-roboto'
-        }
+        // className={
+        //   locale === Languages.ARABIC ? cairo.className : roboto.className
+        // }
       >
           <ReduxProvider>
             <Header />

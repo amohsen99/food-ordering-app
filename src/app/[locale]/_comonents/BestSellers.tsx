@@ -1,23 +1,24 @@
 import MainHeading from '@/components/main-heading';
 import Menu from '@/components/menu';
-import { db } from '@/lib/prisma';
+import { getCurrentLocale } from '@/lib/getCurrentLocale';
+import getTrans from '@/lib/translation';
 import { getBestSellers } from '@/server/db/products';
-import { get } from 'http';
 
 async function BestSellers() {
-  
-  const bestSellers=await getBestSellers(3);
-
+  const bestSellers = await getBestSellers(3);
+  const locale = await getCurrentLocale();
+  const { home } = await getTrans(locale);
+  const { bestSeller } = home;
   return (
     <section>
       <div className='container'>
         <div className='text-center mb-4'>
           <MainHeading
-            subTitle="Check out "
-            title="Our Best Sellers"
+            subTitle={bestSeller.checkOut}
+            title={bestSeller.OurBestSellers}
           />
-        </div>  
-      <Menu items={bestSellers} />
+        </div>
+        <Menu items={bestSellers} />
       </div>
     </section>
   );

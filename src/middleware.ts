@@ -39,11 +39,15 @@ function getLocale(request: NextRequest): string | undefined {
 
     if (pathnameIsMissingLocale) {
       const locale = getLocale(request);
-      response.headers.set("x-locale", locale);
       return NextResponse.redirect(
         new URL(`/${locale}${pathname}`, request.url)
       );
     }
+    return NextResponse.next({
+      request: {
+        headers: requestHeaders,
+      },
+    }); 
   }
 
 export const config = {
