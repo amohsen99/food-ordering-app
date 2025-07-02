@@ -1,4 +1,4 @@
-import { Environments } from "@/constants/enums";
+import { Environments, Pages, Routes } from "@/constants/enums";
 import { NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
@@ -34,4 +34,8 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
+  pages: {
+    signIn: `/${Routes.AUTH}/${Pages.LOGIN}`,
+  },
+
 };

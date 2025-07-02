@@ -124,5 +124,9 @@
     .section-gap{
       @apply py-10 px-10; 
     }
+
+    .element-center{
+      @apply flex items-center justify-center;
+    }
   
 }
