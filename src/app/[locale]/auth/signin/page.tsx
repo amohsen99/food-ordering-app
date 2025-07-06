@@ -3,6 +3,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { Pages, Routes } from "@/constants/enums";
 import { getCurrentLocale } from "@/lib/getCurrentLocale";
 import getTrans from "@/lib/translation";
+import Form from "./_components/Form";
 
 async function SigninPage() {
   const locale = await getCurrentLocale();
@@ -15,7 +16,8 @@ async function SigninPage() {
             <h2 className="text-2xl font-semibold text-center text-black mb-4">
               {translations.auth.login.title}
             </h2>
-            <form>Form</form>
+            <Form translations={translations} />
+
             <p className="mt-2 flex items-center justify-center text-accent text-sm">
               <span>{translations.auth.login.authPrompt.message}</span>
               <Link
