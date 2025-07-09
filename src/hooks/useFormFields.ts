@@ -1,4 +1,4 @@
-import { Pages } from "@/constants/enums";
+import { Pages, Routes, } from "@/constants/enums";
 import { IFormField, IFormFieldsVariables } from "@/types/app";
 import { Translations } from "@/types/translations";
 // import { Translations } from "@/types/translations";
@@ -50,6 +50,51 @@ const useFormFields = ({ slug, translations }: Props) => {
       placeholder: translations.auth.register.confirmPassword.placeholder,
     },
   ];
+  const profileFields = (): IFormField[] => [
+    {
+      label: translations.profile.form.name.label,
+      name: "name",
+      type: "text",
+      placeholder: translations.profile.form.name.placeholder,
+      autoFocus: true,
+    },
+    {
+      label: translations.profile.form.email.label,
+      name: "email",
+      type: "email",
+      placeholder: translations.profile.form.email.placeholder,
+    },
+    {
+      label: translations.profile.form.phone.label,
+      name: "phone",
+      type: "text",
+      placeholder: translations.profile.form.phone.placeholder,
+    },
+    {
+      label: translations.profile.form.address.label,
+      name: "streetAddress",
+      type: "text",
+      placeholder: translations.profile.form.address.placeholder,
+    },
+    {
+      label: translations.profile.form.postalCode.label,
+      name: "postalCode",
+      type: "text",
+      placeholder: translations.profile.form.postalCode.placeholder,
+    },
+    {
+      label: translations.profile.form.city.label,
+      name: "city",
+      type: "text",
+      placeholder: translations.profile.form.city.placeholder,
+    },
+    {
+      label: translations.profile.form.country.label,
+      name: "country",
+      type: "text",
+      placeholder: translations.profile.form.country.placeholder,
+    },
+  ];
 
   
 
@@ -59,6 +104,8 @@ const useFormFields = ({ slug, translations }: Props) => {
         return loginFields();
       case Pages.Register:
         return signupFields();
+      case Routes.PROFILE:
+        return profileFields();
       default:
         return [];
     }
