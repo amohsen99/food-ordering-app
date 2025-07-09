@@ -7,7 +7,7 @@ type Field = {
   };
 };
 
-export type Translations = {
+export type   Translations = {
   logo: string;
   home: {
     hero: {
