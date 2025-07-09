@@ -54,9 +54,14 @@ function EditUserForm({
                 error={{}}
                 readOnly={field.type === InputTypes.EMAIL}
               />
-            </div>
+             
+            </div> 
+
+
           );
-        })}
+        })}<Button type="submit" className="w-full">
+          {translations.save}
+        </Button>
       
        
       </div>
