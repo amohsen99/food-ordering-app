@@ -1,3 +1,4 @@
+import EditUserForm from "@/components/edit-user-form";
 import { Pages, Routes } from "@/constants/enums";
 import { Locale } from "@/i18n.config";
 import getTrans from "@/lib/translation";
@@ -22,7 +23,7 @@ async function AdminPage({ params }: { params: Promise<{ locale: Locale }> }) {
     <main>
       <section className="section-gap">
         <div className="container">
-            admin page
+          <EditUserForm user={session?.user} translations={translations} />
         </div>
       </section>
     </main>
